@@ -38,8 +38,6 @@
             this.addressErrorMessage = new System.Windows.Forms.Label();
             this.phoneNumberErrorMessage = new System.Windows.Forms.Label();
             this.emailErrorMessage = new System.Windows.Forms.Label();
-            this.invalidMessagePhoneNumber = new System.Windows.Forms.Label();
-            this.invalidMessageEmail = new System.Windows.Forms.Label();
             this.boxGender = new System.Windows.Forms.GroupBox();
             this.otherGender = new System.Windows.Forms.RadioButton();
             this.maleGender = new System.Windows.Forms.RadioButton();
@@ -168,9 +166,9 @@
             this.addressErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.addressErrorMessage.Location = new System.Drawing.Point(90, 245);
             this.addressErrorMessage.Name = "addressErrorMessage";
-            this.addressErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.addressErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.addressErrorMessage.TabIndex = 63;
-            this.addressErrorMessage.Text = "This is required!";
+            this.addressErrorMessage.Text = "error Message";
             // 
             // phoneNumberErrorMessage
             // 
@@ -180,9 +178,9 @@
             this.phoneNumberErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.phoneNumberErrorMessage.Location = new System.Drawing.Point(90, 338);
             this.phoneNumberErrorMessage.Name = "phoneNumberErrorMessage";
-            this.phoneNumberErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.phoneNumberErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.phoneNumberErrorMessage.TabIndex = 64;
-            this.phoneNumberErrorMessage.Text = "This is required!";
+            this.phoneNumberErrorMessage.Text = "error Message";
             // 
             // emailErrorMessage
             // 
@@ -192,33 +190,9 @@
             this.emailErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.emailErrorMessage.Location = new System.Drawing.Point(90, 433);
             this.emailErrorMessage.Name = "emailErrorMessage";
-            this.emailErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.emailErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.emailErrorMessage.TabIndex = 65;
-            this.emailErrorMessage.Text = "This is required!";
-            // 
-            // invalidMessagePhoneNumber
-            // 
-            this.invalidMessagePhoneNumber.AutoSize = true;
-            this.invalidMessagePhoneNumber.BackColor = System.Drawing.Color.Transparent;
-            this.invalidMessagePhoneNumber.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidMessagePhoneNumber.ForeColor = System.Drawing.Color.Red;
-            this.invalidMessagePhoneNumber.Location = new System.Drawing.Point(90, 339);
-            this.invalidMessagePhoneNumber.Name = "invalidMessagePhoneNumber";
-            this.invalidMessagePhoneNumber.Size = new System.Drawing.Size(252, 17);
-            this.invalidMessagePhoneNumber.TabIndex = 68;
-            this.invalidMessagePhoneNumber.Text = "Please provide a valid phone number";
-            // 
-            // invalidMessageEmail
-            // 
-            this.invalidMessageEmail.AutoSize = true;
-            this.invalidMessageEmail.BackColor = System.Drawing.Color.Transparent;
-            this.invalidMessageEmail.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidMessageEmail.ForeColor = System.Drawing.Color.Red;
-            this.invalidMessageEmail.Location = new System.Drawing.Point(90, 434);
-            this.invalidMessageEmail.Name = "invalidMessageEmail";
-            this.invalidMessageEmail.Size = new System.Drawing.Size(236, 17);
-            this.invalidMessageEmail.TabIndex = 69;
-            this.invalidMessageEmail.Text = "Please provide valid email address.";
+            this.emailErrorMessage.Text = "error Message";
             // 
             // boxGender
             // 
@@ -276,8 +250,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.boxGender);
-            this.Controls.Add(this.invalidMessageEmail);
-            this.Controls.Add(this.invalidMessagePhoneNumber);
             this.Controls.Add(this.emailErrorMessage);
             this.Controls.Add(this.phoneNumberErrorMessage);
             this.Controls.Add(this.addressErrorMessage);
@@ -306,8 +278,6 @@
         private System.Windows.Forms.Label addressErrorMessage;
         private System.Windows.Forms.Label phoneNumberErrorMessage;
         private System.Windows.Forms.Label emailErrorMessage;
-        private System.Windows.Forms.Label invalidMessagePhoneNumber;
-        private System.Windows.Forms.Label invalidMessageEmail;
         private System.Windows.Forms.GroupBox boxGender;
         private System.Windows.Forms.RadioButton otherGender;
         private System.Windows.Forms.RadioButton maleGender;

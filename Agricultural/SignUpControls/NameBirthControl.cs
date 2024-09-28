@@ -9,18 +9,24 @@ namespace Agricultural.SignUpControls
         public NameBirthControl()
         {
             InitializeComponent();
+            InitializeErrorMessageVisibility();
             this.Load += NameBirthControl_Load;
             // Initially hide error messages
-            fnameErrorMessage.Visible = false;
-            lnameErrorMessage.Visible = false;
-            invalidMessageFname.Visible = false;
-            invalidMessageMname.Visible = false;
-            invalidMessageLname.Visible = false;
+           
+            BirthDayPicker.Cursor = Cursors.Hand;
         }
 
         private void NameBirthControl_Load(object sender, EventArgs e)
         {
             // Optional: Add any initialization logic you need when the control loads
+        }
+
+        private void InitializeErrorMessageVisibility()
+        {
+            fnameErrorMessage.Visible = false;
+            lnameErrorMessage.Visible = false;
+            invalidMessageMname.Visible = false;
+
         }
 
         public string FirstName => FnameTxt.Text;
@@ -35,23 +41,23 @@ namespace Agricultural.SignUpControls
 
             if (string.IsNullOrWhiteSpace(FirstName))
             {
-                DisplayErrorChangeColor(fnameErrorMessage, FnameTxt);
+                DisplayErrorChangeColor(fnameErrorMessage, FnameTxt, "This is required!");
                 isValid = false;
             }
             else if (!IsValidName(FirstName))
             {
-                InvalidInput(FnameTxt, invalidMessageFname);
+                InvalidInput(FnameTxt, fnameErrorMessage, "Please provide your valid first name.");
                 isValid = false;
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
-                DisplayErrorChangeColor(lnameErrorMessage, LNameTxt);
+                DisplayErrorChangeColor(lnameErrorMessage, LNameTxt, "This is required");
                 isValid = false;
             }
             else if (!IsValidName(LastName))
             {
-                InvalidInput(LNameTxt, invalidMessageLname);
+                InvalidInput(LNameTxt, lnameErrorMessage, "Please provide your valid last name");
                 isValid = false;
             }
 
@@ -70,7 +76,6 @@ namespace Agricultural.SignUpControls
             {
                 fnameErrorMessage.Visible = false;
                 FnameTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
-                invalidMessageFname.Visible = false; // Hide invalid message
             }
         }
 
@@ -80,19 +85,20 @@ namespace Agricultural.SignUpControls
             {
                 lnameErrorMessage.Visible = false;
                 LNameTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
-                invalidMessageLname.Visible = false; // Hide invalid message
             }
         }
 
-        private void DisplayErrorChangeColor(Label label, Guna.UI2.WinForms.Guna2TextBox textBox)
+        private void DisplayErrorChangeColor(Label label, Guna.UI2.WinForms.Guna2TextBox textBox, string message)
         {
             label.Visible = true;
+            label.Text = message;
             textBox.BorderColor = System.Drawing.Color.Red;
         }
 
-        private void InvalidInput(Guna.UI2.WinForms.Guna2TextBox textBox, Label label)
+        private void InvalidInput(Guna.UI2.WinForms.Guna2TextBox textBox, Label label, string message)
         {
             label.Visible = true;
+            label.Text = message;
             textBox.BorderColor = System.Drawing.Color.Red;
         }
     }

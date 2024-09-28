@@ -36,9 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.fnameErrorMessage = new System.Windows.Forms.Label();
             this.lnameErrorMessage = new System.Windows.Forms.Label();
-            this.invalidMessageFname = new System.Windows.Forms.Label();
             this.invalidMessageMname = new System.Windows.Forms.Label();
-            this.invalidMessageLname = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label4
@@ -152,9 +150,9 @@
             this.fnameErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.fnameErrorMessage.Location = new System.Drawing.Point(87, 142);
             this.fnameErrorMessage.Name = "fnameErrorMessage";
-            this.fnameErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.fnameErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.fnameErrorMessage.TabIndex = 23;
-            this.fnameErrorMessage.Text = "This is required!";
+            this.fnameErrorMessage.Text = "error Message";
             // 
             // lnameErrorMessage
             // 
@@ -164,21 +162,9 @@
             this.lnameErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.lnameErrorMessage.Location = new System.Drawing.Point(88, 318);
             this.lnameErrorMessage.Name = "lnameErrorMessage";
-            this.lnameErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.lnameErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.lnameErrorMessage.TabIndex = 24;
-            this.lnameErrorMessage.Text = "This is required!";
-            // 
-            // invalidMessageFname
-            // 
-            this.invalidMessageFname.AutoSize = true;
-            this.invalidMessageFname.BackColor = System.Drawing.Color.Transparent;
-            this.invalidMessageFname.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidMessageFname.ForeColor = System.Drawing.Color.Red;
-            this.invalidMessageFname.Location = new System.Drawing.Point(87, 142);
-            this.invalidMessageFname.Name = "invalidMessageFname";
-            this.invalidMessageFname.Size = new System.Drawing.Size(237, 17);
-            this.invalidMessageFname.TabIndex = 25;
-            this.invalidMessageFname.Text = "Please provide you valid first name.";
+            this.lnameErrorMessage.Text = "error Message";
             // 
             // invalidMessageMname
             // 
@@ -188,30 +174,16 @@
             this.invalidMessageMname.ForeColor = System.Drawing.Color.Red;
             this.invalidMessageMname.Location = new System.Drawing.Point(87, 234);
             this.invalidMessageMname.Name = "invalidMessageMname";
-            this.invalidMessageMname.Size = new System.Drawing.Size(261, 17);
+            this.invalidMessageMname.Size = new System.Drawing.Size(96, 17);
             this.invalidMessageMname.TabIndex = 26;
-            this.invalidMessageMname.Text = "Please provide you valid middle name.";
-            // 
-            // invalidMessageLname
-            // 
-            this.invalidMessageLname.AutoSize = true;
-            this.invalidMessageLname.BackColor = System.Drawing.Color.Transparent;
-            this.invalidMessageLname.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidMessageLname.ForeColor = System.Drawing.Color.Red;
-            this.invalidMessageLname.Location = new System.Drawing.Point(88, 318);
-            this.invalidMessageLname.Name = "invalidMessageLname";
-            this.invalidMessageLname.Size = new System.Drawing.Size(238, 17);
-            this.invalidMessageLname.TabIndex = 27;
-            this.invalidMessageLname.Text = "Please provide you valid last name.";
+            this.invalidMessageMname.Text = "error Message";
             // 
             // NameBirthControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.invalidMessageLname);
             this.Controls.Add(this.invalidMessageMname);
-            this.Controls.Add(this.invalidMessageFname);
             this.Controls.Add(this.lnameErrorMessage);
             this.Controls.Add(this.fnameErrorMessage);
             this.Controls.Add(this.label4);
@@ -238,8 +210,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label fnameErrorMessage;
         private System.Windows.Forms.Label lnameErrorMessage;
-        private System.Windows.Forms.Label invalidMessageFname;
         private System.Windows.Forms.Label invalidMessageMname;
-        private System.Windows.Forms.Label invalidMessageLname;
     }
 }

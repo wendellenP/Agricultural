@@ -1,20 +1,26 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Agricultural.SignUpControls
 {
     public partial class AddressGenderControl : UserControl
     {
+
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
         public AddressGenderControl()
         {
             InitializeComponent();
             addressErrorMessage.Visible = false;
             phoneNumberErrorMessage.Visible = false;
             emailErrorMessage.Visible = false;
-            invalidMessagePhoneNumber.Visible = false;
-            invalidMessageEmail.Visible = false;
+            
+            maleGender.Cursor = Cursors.Hand;
+            femaleGender.Cursor = Cursors.Hand;
+            otherGender.Cursor = Cursors.Hand;
         }
 
         public string Address => AddressTxt.Text;
@@ -37,7 +43,7 @@ namespace Agricultural.SignUpControls
             // Validate Address
             if (string.IsNullOrWhiteSpace(Address))
             {
-                DisplayErrorChangeColor(addressErrorMessage, AddressTxt);
+                DisplayErrorChangeColor(addressErrorMessage, AddressTxt, "This is required!");
                 isValid = false;
             }
             else
@@ -49,12 +55,12 @@ namespace Agricultural.SignUpControls
             // Validate Phone Number
             if (string.IsNullOrWhiteSpace(PhoneNumber))
             {
-                DisplayErrorChangeColor(phoneNumberErrorMessage, PhoneNumberTxt);
+                DisplayErrorChangeColor(phoneNumberErrorMessage, PhoneNumberTxt, "This is required!");
                 isValid = false;
             }
             else if (!IsValidPhoneNumber(PhoneNumber))
             {
-                ValidPhoneNumber(); // Show invalid message
+                DisplayErrorChangeColor(phoneNumberErrorMessage, PhoneNumberTxt, "Provide a valid phone number"); // Show invalid message
                 isValid = false;
             }
             else
@@ -66,12 +72,17 @@ namespace Agricultural.SignUpControls
             // Validate Email
             if (string.IsNullOrWhiteSpace(Email))
             {
-                DisplayErrorChangeColor(emailErrorMessage, EmailAddressTxt);
+                DisplayErrorChangeColor(emailErrorMessage, EmailAddressTxt, "This is required!");
                 isValid = false;
             }
             else if (!IsValidEmail(Email))
             {
-                ValidEmail(); // Show invalid message
+                DisplayErrorChangeColor(emailErrorMessage, EmailAddressTxt, "Provide a valid email address");
+                isValid = false;
+            }
+            else if (!IsEmailUnique(Email))
+            {
+                DisplayErrorChangeColor(emailErrorMessage, EmailAddressTxt, "Email address is already exists.");
                 isValid = false;
             }
             else
@@ -83,20 +94,11 @@ namespace Agricultural.SignUpControls
             return isValid;
         }
 
-        private void DisplayErrorChangeColor(Label label, Guna.UI2.WinForms.Guna2TextBox textBox)
+        private void DisplayErrorChangeColor(Label label, Guna.UI2.WinForms.Guna2TextBox textBox, string message)
         {
             label.Visible = true;
+            label.Text = message;
             textBox.BorderColor = Color.Red; // Change border color to red
-        }
-
-        private void ValidPhoneNumber()
-        {
-            invalidMessagePhoneNumber.Visible = true; // Show invalid phone number message
-        }
-
-        private void ValidEmail()
-        {
-            invalidMessageEmail.Visible = true; // Show invalid email message
         }
 
         private bool IsValidPhoneNumber(string phoneNumber)
@@ -120,13 +122,23 @@ namespace Agricultural.SignUpControls
             }
         }
 
+        private bool IsEmailUnique(string email)
+        {
+            using MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            string query = "SELECT COUNT(*) FROM Beneficiaries WHERE Email = @Email";
+            using MySqlCommand command = new MySqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email", email);
+            int count = Convert.ToInt32(command.ExecuteScalar());
+            return count == 0; // Return true if no existing email found
+        }
+
         private void EmailAddressTxt_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(Email))
             {
                 emailErrorMessage.Visible = false;
                 EmailAddressTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
-                invalidMessageEmail.Visible = false; // Hide invalid message
             }
         }
 
@@ -136,7 +148,6 @@ namespace Agricultural.SignUpControls
             {
                 phoneNumberErrorMessage.Visible = false;
                 PhoneNumberTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
-                invalidMessagePhoneNumber.Visible = false; // Hide invalid message
             }
         }
     }

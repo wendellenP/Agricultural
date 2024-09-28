@@ -42,6 +42,7 @@
             this.SignUpFillPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.NextBtn = new Guna.UI2.WinForms.Guna2Button();
+            this.usernameMessage = new Bunifu.UI.WinForms.BunifuSnackbar(this.components);
             this.SignUpPanel.SuspendLayout();
             this.SignUpPanelDrag.SuspendLayout();
             this.SignUpFillPanel.SuspendLayout();
@@ -186,6 +187,76 @@
             this.NextBtn.Text = "Next      >";
             this.NextBtn.Click += new System.EventHandler(this.guna2Button1_Click);
             // 
+            // usernameMessage
+            // 
+            this.usernameMessage.AllowDragging = false;
+            this.usernameMessage.AllowMultipleViews = true;
+            this.usernameMessage.ClickToClose = true;
+            this.usernameMessage.DoubleClickToClose = true;
+            this.usernameMessage.DurationAfterIdle = 3000;
+            this.usernameMessage.ErrorOptions.ActionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.ErrorOptions.ActionBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.ErrorOptions.ActionBorderRadius = 1;
+            this.usernameMessage.ErrorOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.usernameMessage.ErrorOptions.ActionForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.ErrorOptions.BackColor = System.Drawing.Color.White;
+            this.usernameMessage.ErrorOptions.BorderColor = System.Drawing.Color.White;
+            this.usernameMessage.ErrorOptions.CloseIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(199)))));
+            this.usernameMessage.ErrorOptions.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.usernameMessage.ErrorOptions.ForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.ErrorOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon")));
+            this.usernameMessage.ErrorOptions.IconLeftMargin = 12;
+            this.usernameMessage.FadeCloseIcon = false;
+            this.usernameMessage.Host = Bunifu.UI.WinForms.BunifuSnackbar.Hosts.FormOwner;
+            this.usernameMessage.InformationOptions.ActionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.InformationOptions.ActionBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.InformationOptions.ActionBorderRadius = 1;
+            this.usernameMessage.InformationOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.usernameMessage.InformationOptions.ActionForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.InformationOptions.BackColor = System.Drawing.Color.White;
+            this.usernameMessage.InformationOptions.BorderColor = System.Drawing.Color.White;
+            this.usernameMessage.InformationOptions.CloseIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(213)))), ((int)(((byte)(255)))));
+            this.usernameMessage.InformationOptions.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.usernameMessage.InformationOptions.ForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.InformationOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon1")));
+            this.usernameMessage.InformationOptions.IconLeftMargin = 12;
+            this.usernameMessage.Margin = 10;
+            this.usernameMessage.MaximumSize = new System.Drawing.Size(0, 0);
+            this.usernameMessage.MaximumViews = 7;
+            this.usernameMessage.MessageRightMargin = 15;
+            this.usernameMessage.MessageTopMargin = 0;
+            this.usernameMessage.MinimumSize = new System.Drawing.Size(0, 0);
+            this.usernameMessage.ShowBorders = false;
+            this.usernameMessage.ShowCloseIcon = false;
+            this.usernameMessage.ShowIcon = true;
+            this.usernameMessage.ShowShadows = true;
+            this.usernameMessage.SuccessOptions.ActionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.SuccessOptions.ActionBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.SuccessOptions.ActionBorderRadius = 1;
+            this.usernameMessage.SuccessOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.usernameMessage.SuccessOptions.ActionForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.SuccessOptions.BackColor = System.Drawing.Color.White;
+            this.usernameMessage.SuccessOptions.BorderColor = System.Drawing.Color.White;
+            this.usernameMessage.SuccessOptions.CloseIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(255)))), ((int)(((byte)(237)))));
+            this.usernameMessage.SuccessOptions.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.usernameMessage.SuccessOptions.ForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.SuccessOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon2")));
+            this.usernameMessage.SuccessOptions.IconLeftMargin = 12;
+            this.usernameMessage.ViewsMargin = 7;
+            this.usernameMessage.WarningOptions.ActionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.WarningOptions.ActionBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.usernameMessage.WarningOptions.ActionBorderRadius = 1;
+            this.usernameMessage.WarningOptions.ActionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.usernameMessage.WarningOptions.ActionForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.WarningOptions.BackColor = System.Drawing.Color.White;
+            this.usernameMessage.WarningOptions.BorderColor = System.Drawing.Color.White;
+            this.usernameMessage.WarningOptions.CloseIconColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(143)))));
+            this.usernameMessage.WarningOptions.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.usernameMessage.WarningOptions.ForeColor = System.Drawing.Color.Black;
+            this.usernameMessage.WarningOptions.Icon = ((System.Drawing.Image)(resources.GetObject("resource.Icon3")));
+            this.usernameMessage.WarningOptions.IconLeftMargin = 12;
+            this.usernameMessage.ZoomCloseIcon = true;
+            // 
             // SignUpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -222,6 +293,7 @@
         private System.Windows.Forms.Panel SignUpFillPanel;
         private Guna.UI2.WinForms.Guna2Button NextBtn;
         private System.Windows.Forms.Panel panel1;
+        private Bunifu.UI.WinForms.BunifuSnackbar usernameMessage;
     }
 }
 

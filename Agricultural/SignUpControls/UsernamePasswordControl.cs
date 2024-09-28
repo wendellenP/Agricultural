@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 
 namespace Agricultural.SignUpControls
 {
@@ -12,17 +13,12 @@ namespace Agricultural.SignUpControls
             InitializeComponent();
             SignUpButton.Click += signUpButtonT_Click;
 
-            // Initialize error messages to be hidden
-            usernameErrorMessage.Visible = false;
-            passwordErrorMessage.Visible = false;
-            confirmPassErrorMessage.Visible = false;
-            invalidMessageUsername.Visible = false;
-            weakMessagePassword.Visible = false;
-            weakMessagePassword2.Visible = false;
-            invalidConfirmMessage.Visible = false;
+            InitializeErrorHandling();
+            InitializePasswordVisibility();
+            InitializeCursors();
         }
 
-        public Guna.UI2.WinForms.Guna2Button SignUpButton => signUpButtonT;
+        public Guna2Button SignUpButton => signUpButtonT;
 
         public string Username => UsernameTxt.Text;
         public string Password => PasswordTxt.Text;
@@ -32,79 +28,103 @@ namespace Agricultural.SignUpControls
         {
             if (ValidateInput())
             {
-                // Handle the sign-up logic if needed
+                // Handle successful validation, proceed with signup logic
                 MessageBox.Show("Sign Up successful!");
             }
+        }
+
+        private void InitializeErrorHandling()
+        {
+            // Initialize error messages to be hidden
+            errorMessageUsername.Visible = false;
+            passwordErrorMessage.Visible = false;
+            confirmPassErrorMessage.Visible = false;
+        }
+
+        private void InitializePasswordVisibility()
+        {
+            // Initialize password visibility controls
+            showPasswordSign.Show();
+            showPasswordSignConfirm.Show();
+
+            hidePasswordSign.Hide();
+            hidePasswordSignConfirm.Hide();
+        }
+
+        private void InitializeCursors()
+        {
+            // Initialize cursor icons for user experience
+            showPasswordSign.Cursor = Cursors.Hand;
+            showPasswordSignConfirm.Cursor = Cursors.Hand;
+            hidePasswordSign.Cursor = Cursors.Hand;
+            hidePasswordSignConfirm.Cursor = Cursors.Hand;
+            signUpButtonT.Cursor = Cursors.Hand;
         }
 
         public bool ValidateInput()
         {
             bool isValid = true;
 
-            // Hide all error messages at the start
-            usernameErrorMessage.Visible = false;
-            passwordErrorMessage.Visible = false;
-            confirmPassErrorMessage.Visible = false;
-            invalidMessageUsername.Visible = false;
-            weakMessagePassword.Visible = false;
-            weakMessagePassword2.Visible = false;
-            invalidConfirmMessage.Visible = false;
+            // Reset error messages and colors
+            ResetErrors();
 
             // Validate Username
             if (string.IsNullOrWhiteSpace(Username))
             {
-                DisplayErrorChangeColor(usernameErrorMessage, UsernameTxt);
+                SetError(errorMessageUsername, UsernameTxt, "Username cannot be empty.");
                 isValid = false;
             }
             else if (!IsValidUserName(Username))
             {
-                ValidUsername();
+                SetError(errorMessageUsername, UsernameTxt, "Username must be 5-15 alphanumeric characters.");
                 isValid = false;
-            }
-            else
-            {
-                UsernameTxt.BorderColor = SystemColors.WindowFrame; // Reset color if valid
             }
 
             // Validate Password
             if (string.IsNullOrWhiteSpace(Password))
             {
-                DisplayErrorChangeColor(passwordErrorMessage, PasswordTxt);
+                SetError(passwordErrorMessage, PasswordTxt, "Password cannot be empty.");
                 isValid = false;
             }
             else if (!IsValidPassword(Password))
             {
-                ValidPassword();
+                SetError(passwordErrorMessage, PasswordTxt, "Password must be at least 8 characters with one digit and capital letter.");
                 isValid = false;
-            }
-            else
-            {
-                PasswordTxt.BorderColor = SystemColors.WindowFrame; // Reset color if valid
             }
 
             // Validate Confirm Password
             if (string.IsNullOrWhiteSpace(ConfirmPassword))
             {
-                DisplayErrorChangeColor(confirmPassErrorMessage, ConfirmPasswordTxt);
+                SetError(confirmPassErrorMessage, ConfirmPasswordTxt, "Please confirm your password.");
                 isValid = false;
             }
             else if (Password != ConfirmPassword)
             {
-                ValidConfirmPassword();
+                SetError(confirmPassErrorMessage, ConfirmPasswordTxt, "Passwords do not match.");
                 isValid = false;
-            }
-            else
-            {
-                ConfirmPasswordTxt.BorderColor = SystemColors.WindowFrame; // Reset color if valid
             }
 
             return isValid;
         }
 
-        private void DisplayErrorChangeColor(Label label, Guna.UI2.WinForms.Guna2TextBox textBox)
+        private void ResetErrors()
         {
-            label.Visible = true;
-            textBox.BorderColor = Color.Red; // Change border color to red
+            // Hide all error messages and reset colors
+            errorMessageUsername.Visible = false;
+            passwordErrorMessage.Visible = false;
+            confirmPassErrorMessage.Visible = false;
+
+            UsernameTxt.BorderColor = SystemColors.WindowFrame;
+            PasswordTxt.BorderColor = SystemColors.WindowFrame;
+            ConfirmPasswordTxt.BorderColor = SystemColors.WindowFrame;
+        }
+
+        private void SetError(Label errorLabel, Guna2TextBox textBox, string message)
+        {
+            // Display error message and highlight field
+            errorLabel.Text = message;
+            errorLabel.Visible = true;
+            textBox.BorderColor = Color.Red;
         }
 
         private bool IsValidUserName(string username)
@@ -119,29 +139,12 @@ namespace Agricultural.SignUpControls
             return Regex.IsMatch(password, @"^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,}$");
         }
 
-        private void ValidUsername()
-        {
-            invalidMessageUsername.Visible = true; // Show invalid username message
-        }
-
-        private void ValidPassword()
-        {
-            weakMessagePassword.Visible = true; // Show invalid password message
-            weakMessagePassword2.Visible = true;
-        }
-
-        private void ValidConfirmPassword()
-        {
-            invalidConfirmMessage.Visible = true; // Show invalid confirm password message
-        }
-
         private void UsernameTxt_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(Username))
             {
-                usernameErrorMessage.Visible = false;
-                UsernameTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255); // Reset to a valid border color
-                invalidMessageUsername.Visible = false; // Hide invalid message
+                UsernameTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
+                errorMessageUsername.Visible = false;
             }
         }
 
@@ -149,15 +152,16 @@ namespace Agricultural.SignUpControls
         {
             if (!string.IsNullOrWhiteSpace(Password))
             {
-                passwordErrorMessage.Visible = false; // Hide error if valid
-                PasswordTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255); // Reset to a valid border color
-
-                // If password is valid, hide weak password message
-                if (IsValidPassword(Password))
-                {
-                    weakMessagePassword.Visible = false; // Hide weak password message if valid
-                    weakMessagePassword2.Visible = false; // Also hide the second weak password message
-                }
+                passwordErrorMessage.Visible = false;
+                PasswordTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
+                showPasswordSign.Show();
+                hidePasswordSign.Hide();
+            }
+            else
+            {
+                PasswordTxt.PasswordChar = '●';
+                showPasswordSign.Show();
+                hidePasswordSign.Hide();
             }
         }
 
@@ -165,16 +169,60 @@ namespace Agricultural.SignUpControls
         {
             if (!string.IsNullOrWhiteSpace(ConfirmPassword))
             {
-                confirmPassErrorMessage.Visible = false; // Hide error if valid
-                ConfirmPasswordTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255); // Reset to a valid border color
-
-                // Check if passwords match and reset confirmation message
-                if (Password == ConfirmPassword)
-                {
-                    invalidConfirmMessage.Visible = false; // Hide invalid confirm message if passwords match
-                }
+                confirmPassErrorMessage.Visible = false;
+                ConfirmPasswordTxt.BorderColor = System.Drawing.Color.FromArgb(94, 148, 255);
+                showPasswordSignConfirm.Show();
+                hidePasswordSignConfirm.Hide();
             }
         }
 
+        public void ShowPassword(PictureBox showEye, PictureBox hideEye, Guna2TextBox password)
+        {
+            if (password.PasswordChar == '●' && !string.IsNullOrEmpty(password.Text))
+            {
+                password.PasswordChar = '\0';
+                showEye.Hide();
+                hideEye.Show();
+            }
+            else
+            {
+                showEye.Show();
+            }
+        }
+
+        public void HidePassword(PictureBox hideEye, PictureBox showEye, Guna2TextBox password)
+        {
+            if (password.PasswordChar == '\0' && !string.IsNullOrEmpty(password.Text))
+            {
+                password.PasswordChar = '●';
+                showEye.Show();
+                hideEye.Hide();
+            }
+            else
+            {
+                password.PasswordChar = '●';
+                showEye.Hide();
+            }
+        }
+
+        private void hidePasswordSign_Click(object sender, EventArgs e)
+        {
+            HidePassword(hidePasswordSign, showPasswordSign, PasswordTxt);
+        }
+
+        private void showPasswordSign_Click(object sender, EventArgs e)
+        {
+            ShowPassword(showPasswordSign, hidePasswordSign, PasswordTxt);
+        }
+
+        private void hidePasswordSignConfirm_Click(object sender, EventArgs e)
+        {
+            HidePassword(hidePasswordSignConfirm, showPasswordSignConfirm, ConfirmPasswordTxt);
+        }
+
+        private void showPasswordSignConfirm_Click(object sender, EventArgs e)
+        {
+            ShowPassword(showPasswordSignConfirm, hidePasswordSignConfirm, ConfirmPasswordTxt);
+        }
     }
 }

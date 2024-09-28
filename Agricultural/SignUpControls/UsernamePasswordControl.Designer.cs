@@ -38,13 +38,9 @@
             this.showPasswordSignConfirm = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.hidePasswordSign = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.hidePasswordSignConfirm = new Guna.UI2.WinForms.Guna2CirclePictureBox();
-            this.usernameErrorMessage = new System.Windows.Forms.Label();
+            this.errorMessageUsername = new System.Windows.Forms.Label();
             this.passwordErrorMessage = new System.Windows.Forms.Label();
             this.confirmPassErrorMessage = new System.Windows.Forms.Label();
-            this.invalidMessageUsername = new System.Windows.Forms.Label();
-            this.weakMessagePassword = new System.Windows.Forms.Label();
-            this.invalidConfirmMessage = new System.Windows.Forms.Label();
-            this.weakMessagePassword2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.showPasswordSign)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.showPasswordSignConfirm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hidePasswordSign)).BeginInit();
@@ -66,7 +62,7 @@
             this.ConfirmPasswordTxt.Location = new System.Drawing.Point(91, 271);
             this.ConfirmPasswordTxt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ConfirmPasswordTxt.Name = "ConfirmPasswordTxt";
-            this.ConfirmPasswordTxt.PasswordChar = '\0';
+            this.ConfirmPasswordTxt.PasswordChar = '●';
             this.ConfirmPasswordTxt.PlaceholderText = "Confirm Password";
             this.ConfirmPasswordTxt.SelectedText = "";
             this.ConfirmPasswordTxt.Size = new System.Drawing.Size(506, 55);
@@ -88,7 +84,7 @@
             this.PasswordTxt.Location = new System.Drawing.Point(91, 179);
             this.PasswordTxt.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PasswordTxt.Name = "PasswordTxt";
-            this.PasswordTxt.PasswordChar = '\0';
+            this.PasswordTxt.PasswordChar = '●';
             this.PasswordTxt.PlaceholderText = "Password";
             this.PasswordTxt.SelectedText = "";
             this.PasswordTxt.Size = new System.Drawing.Size(506, 55);
@@ -156,6 +152,7 @@
             this.showPasswordSign.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.showPasswordSign.TabIndex = 30;
             this.showPasswordSign.TabStop = false;
+            this.showPasswordSign.Click += new System.EventHandler(this.showPasswordSign_Click);
             // 
             // showPasswordSignConfirm
             // 
@@ -168,6 +165,7 @@
             this.showPasswordSignConfirm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.showPasswordSignConfirm.TabIndex = 31;
             this.showPasswordSignConfirm.TabStop = false;
+            this.showPasswordSignConfirm.Click += new System.EventHandler(this.showPasswordSignConfirm_Click);
             // 
             // hidePasswordSign
             // 
@@ -180,6 +178,7 @@
             this.hidePasswordSign.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.hidePasswordSign.TabIndex = 32;
             this.hidePasswordSign.TabStop = false;
+            this.hidePasswordSign.Click += new System.EventHandler(this.hidePasswordSign_Click);
             // 
             // hidePasswordSignConfirm
             // 
@@ -192,18 +191,19 @@
             this.hidePasswordSignConfirm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.hidePasswordSignConfirm.TabIndex = 33;
             this.hidePasswordSignConfirm.TabStop = false;
+            this.hidePasswordSignConfirm.Click += new System.EventHandler(this.hidePasswordSignConfirm_Click);
             // 
-            // usernameErrorMessage
+            // errorMessageUsername
             // 
-            this.usernameErrorMessage.AutoSize = true;
-            this.usernameErrorMessage.BackColor = System.Drawing.Color.Transparent;
-            this.usernameErrorMessage.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernameErrorMessage.ForeColor = System.Drawing.Color.Red;
-            this.usernameErrorMessage.Location = new System.Drawing.Point(88, 146);
-            this.usernameErrorMessage.Name = "usernameErrorMessage";
-            this.usernameErrorMessage.Size = new System.Drawing.Size(101, 17);
-            this.usernameErrorMessage.TabIndex = 34;
-            this.usernameErrorMessage.Text = "This is required!";
+            this.errorMessageUsername.AutoSize = true;
+            this.errorMessageUsername.BackColor = System.Drawing.Color.Transparent;
+            this.errorMessageUsername.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorMessageUsername.ForeColor = System.Drawing.Color.Red;
+            this.errorMessageUsername.Location = new System.Drawing.Point(92, 146);
+            this.errorMessageUsername.Name = "errorMessageUsername";
+            this.errorMessageUsername.Size = new System.Drawing.Size(96, 17);
+            this.errorMessageUsername.TabIndex = 34;
+            this.errorMessageUsername.Text = "error Message";
             // 
             // passwordErrorMessage
             // 
@@ -211,11 +211,11 @@
             this.passwordErrorMessage.BackColor = System.Drawing.Color.Transparent;
             this.passwordErrorMessage.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordErrorMessage.ForeColor = System.Drawing.Color.Red;
-            this.passwordErrorMessage.Location = new System.Drawing.Point(88, 239);
+            this.passwordErrorMessage.Location = new System.Drawing.Point(92, 242);
             this.passwordErrorMessage.Name = "passwordErrorMessage";
-            this.passwordErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.passwordErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.passwordErrorMessage.TabIndex = 35;
-            this.passwordErrorMessage.Text = "This is required!";
+            this.passwordErrorMessage.Text = "error Message";
             // 
             // confirmPassErrorMessage
             // 
@@ -225,70 +225,18 @@
             this.confirmPassErrorMessage.ForeColor = System.Drawing.Color.Red;
             this.confirmPassErrorMessage.Location = new System.Drawing.Point(88, 331);
             this.confirmPassErrorMessage.Name = "confirmPassErrorMessage";
-            this.confirmPassErrorMessage.Size = new System.Drawing.Size(101, 17);
+            this.confirmPassErrorMessage.Size = new System.Drawing.Size(96, 17);
             this.confirmPassErrorMessage.TabIndex = 36;
-            this.confirmPassErrorMessage.Text = "This is required!";
-            // 
-            // invalidMessageUsername
-            // 
-            this.invalidMessageUsername.AutoSize = true;
-            this.invalidMessageUsername.BackColor = System.Drawing.Color.Transparent;
-            this.invalidMessageUsername.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidMessageUsername.ForeColor = System.Drawing.Color.Red;
-            this.invalidMessageUsername.Location = new System.Drawing.Point(88, 146);
-            this.invalidMessageUsername.Name = "invalidMessageUsername";
-            this.invalidMessageUsername.Size = new System.Drawing.Size(233, 17);
-            this.invalidMessageUsername.TabIndex = 37;
-            this.invalidMessageUsername.Text = "Please provide you valid username";
-            // 
-            // weakMessagePassword
-            // 
-            this.weakMessagePassword.AutoSize = true;
-            this.weakMessagePassword.BackColor = System.Drawing.Color.Transparent;
-            this.weakMessagePassword.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weakMessagePassword.ForeColor = System.Drawing.Color.Red;
-            this.weakMessagePassword.Location = new System.Drawing.Point(88, 239);
-            this.weakMessagePassword.Name = "weakMessagePassword";
-            this.weakMessagePassword.Size = new System.Drawing.Size(152, 17);
-            this.weakMessagePassword.TabIndex = 38;
-            this.weakMessagePassword.Text = "Password is too weak.";
-            // 
-            // invalidConfirmMessage
-            // 
-            this.invalidConfirmMessage.AutoSize = true;
-            this.invalidConfirmMessage.BackColor = System.Drawing.Color.Transparent;
-            this.invalidConfirmMessage.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.invalidConfirmMessage.ForeColor = System.Drawing.Color.Red;
-            this.invalidConfirmMessage.Location = new System.Drawing.Point(88, 331);
-            this.invalidConfirmMessage.Name = "invalidConfirmMessage";
-            this.invalidConfirmMessage.Size = new System.Drawing.Size(138, 17);
-            this.invalidConfirmMessage.TabIndex = 40;
-            this.invalidConfirmMessage.Text = "Invalid confirmation";
-            // 
-            // weakMessagePassword2
-            // 
-            this.weakMessagePassword2.AutoSize = true;
-            this.weakMessagePassword2.BackColor = System.Drawing.Color.Transparent;
-            this.weakMessagePassword2.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weakMessagePassword2.ForeColor = System.Drawing.Color.Red;
-            this.weakMessagePassword2.Location = new System.Drawing.Point(88, 331);
-            this.weakMessagePassword2.Name = "weakMessagePassword2";
-            this.weakMessagePassword2.Size = new System.Drawing.Size(152, 17);
-            this.weakMessagePassword2.TabIndex = 41;
-            this.weakMessagePassword2.Text = "Password is too weak.";
+            this.confirmPassErrorMessage.Text = "error Message";
             // 
             // UsernamePasswordControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.weakMessagePassword2);
-            this.Controls.Add(this.invalidConfirmMessage);
-            this.Controls.Add(this.weakMessagePassword);
-            this.Controls.Add(this.invalidMessageUsername);
             this.Controls.Add(this.confirmPassErrorMessage);
             this.Controls.Add(this.passwordErrorMessage);
-            this.Controls.Add(this.usernameErrorMessage);
+            this.Controls.Add(this.errorMessageUsername);
             this.Controls.Add(this.hidePasswordSignConfirm);
             this.Controls.Add(this.hidePasswordSign);
             this.Controls.Add(this.showPasswordSignConfirm);
@@ -321,13 +269,9 @@
         private Guna.UI2.WinForms.Guna2CirclePictureBox showPasswordSignConfirm;
         private Guna.UI2.WinForms.Guna2CirclePictureBox hidePasswordSign;
         private Guna.UI2.WinForms.Guna2CirclePictureBox hidePasswordSignConfirm;
-        private System.Windows.Forms.Label usernameErrorMessage;
+        private System.Windows.Forms.Label errorMessageUsername;
         private System.Windows.Forms.Label passwordErrorMessage;
         private System.Windows.Forms.Label confirmPassErrorMessage;
-        private System.Windows.Forms.Label invalidMessageUsername;
-        private System.Windows.Forms.Label weakMessagePassword;
-        private System.Windows.Forms.Label invalidConfirmMessage;
-        private System.Windows.Forms.Label weakMessagePassword2;
         //  private Guna.UI2.WinForms.Guna2Button signBtn;
     }
 }

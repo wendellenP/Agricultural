@@ -1,20 +1,32 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.SqlClient; // Use the appropriate namespace for your database
 using System.Linq;
 using System.Windows.Forms;
 using Agricultural.SignUpControls;
+using MySql.Data.MySqlClient;
 
 namespace Agricultural
 {
     public partial class SignUpForm : Form
     {
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ConnectionString;
+
         private int currentControlIndex = 0;
         private UserControl[] userControls;
 
         public SignUpForm()
         {
             InitializeComponent();
-            InitializeUserControls();
-            ShowCurrentUserControl();
+            try
+            {
+                InitializeUserControls();
+                ShowCurrentUserControl();
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show($"A null reference occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void InitializeUserControls()
@@ -64,10 +76,6 @@ namespace Agricultural
 
                 AddUserControl(userControls[currentControlIndex]);
             }
-            else
-            {
-                MessageBox.Show("Please correct the errors in the current section before proceeding.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void AddUserControl(UserControl userControl)
@@ -90,7 +98,6 @@ namespace Agricultural
                 !nameControl.ValidateInput() ||
                 !addressControl.ValidateInput() ||
                 !usernameControl.ValidateInput())
-               
             {
                 return; // Exit if any validation fails
             }
@@ -115,6 +122,63 @@ namespace Agricultural
 
             string username = usernameControl.Username;
             string password = usernameControl.Password;
+
+            // Hash the password using bcrypt
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+
+            // Insert data into the Beneficiaries table
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Check for duplicate username
+                string duplicateUsernameQuery = "SELECT COUNT(*) FROM Beneficiaries WHERE Username = @Username";
+                int usernameCount;
+
+                using (MySqlCommand duplicateUsernameCommand = new MySqlCommand(duplicateUsernameQuery, connection))
+                {
+                    duplicateUsernameCommand.Parameters.AddWithValue("@Username", username);
+                    usernameCount = Convert.ToInt32(duplicateUsernameCommand.ExecuteScalar());
+                }
+
+                // Check if email or username already exists
+                if (usernameCount > 0)
+                {
+                    usernameMessage.Show(this.FindForm(), "Username already exists.", Bunifu.UI.WinForms.BunifuSnackbar.MessageTypes.Error);
+                    return; // Prevent navigation
+                }
+
+                // Insert Beneficiary
+                string beneficiaryQuery = "INSERT INTO Beneficiaries (First_Name, Middle_Name, Last_Name, Username, Phone_Number, Email, Address, Birth_Date, Gender, Password_Hash) " +
+                                           "VALUES (@FirstName, @MiddleName, @LastName, @Username, @PhoneNumber, @Email, @Address, @BirthDate, @Gender, @PasswordHash)";
+
+                long userId;
+
+                using (MySqlCommand command = new MySqlCommand(beneficiaryQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", firstName);
+                    command.Parameters.AddWithValue("@MiddleName", middleName);
+                    command.Parameters.AddWithValue("@LastName", lastName);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Address", address);
+                    command.Parameters.AddWithValue("@BirthDate", birthDate);
+                    command.Parameters.AddWithValue("@Gender", gender);
+                    command.Parameters.AddWithValue("@PasswordHash", passwordHash);
+
+                    command.ExecuteNonQuery();
+                    userId = command.LastInsertedId; // Store the User_ID
+                }
+
+                // Insert Account record
+                string accountQuery = "INSERT INTO Accounts (User_ID) VALUES (@UserID)";
+                using (MySqlCommand accountCommand = new MySqlCommand(accountQuery, connection))
+                {
+                    accountCommand.Parameters.AddWithValue("@UserID", userId);
+                    accountCommand.ExecuteNonQuery();
+                }
+            }
 
             // Show success message
             MessageBox.Show($"Sign-up successful! \nHi {firstName}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
